@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head len="PT-BR">
+      <meta charset="UTF-8">
+  </head>
+  <meta charset="UTF-8">
+  <script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  
+  
+  <body>
+
+    <h2>HTML Forms</h2>
+
+    <form>
+      First name:<br>
+      <input type="text" class = "texto" name="data" placeholder="Data">
+      <br>
+      Last name:<br>
+      <input type="number" class = "texto" name="valor" placeholder="valor">
+      <br><br>
+      <input type="button" value="Submit" onclick="actionSend()">
+    </form> 
+
+
+  </body>
+
+  <script type="text/javascript">
+    var xmlhttp;
+
+    function actionSend() {
+        var values = $(".texto").map(function () {
+            return $(this).val();
+        }).get();
+        var obj = {"data":values[0],"valor" : values[1]};
+        var myJsonString = JSON.stringify(obj);
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:85/webserviceCharts/data/creat.php",
+          async: true,
+          data: myJsonString,
+          success: function(data){
+              console.log(data);
+              return true;
+          },
+          complete: function() {
+            teste();
+          },
+          error: function(xhr, textStatus, errorThrown) {
+            console.log('ajax loading error...');
+            return false;
+          }
+        });
+    }
+
+    function teste(){
+      window.open("https://www.w3schools.com","_parent");
+    }
+    
+  </script>
+</html>
